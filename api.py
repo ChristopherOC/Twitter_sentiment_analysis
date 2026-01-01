@@ -1,16 +1,34 @@
 from fastapi import FastAPI
 from pydantic import BaseModel
 import torch
-import mlflow.pytorch
-from transformers import BertTokenizer, BertForSequenceClassification
 
-mlflow.set_tracking_uri("http://localhost:8080")
+from transformers import BertTokenizer, BertForSequenceClassification
+from azure.storage.blob import BlobServiceClient
+import os
+
 app = FastAPI()
 
 device = "cuda" if torch.cuda.is_available() else "cpu"
 
-MODEL_URI = "models:/Bert/2"
-my_model = 'model.pth'
+# MODEL_URI = "models:/Bert/2"
+# my_model = 'model.pth'
+MODEL_PATH = "model.pth"
+
+if not os.path.exists(MODEL_PATH):
+    conn_str = os.getenv("AZURE_STORAGE_CONNECTION_STRING")
+    if not conn_str:
+        raise RuntimeError("AZURE_STORAGE_CONNECTION_STRING manquante")
+
+    blob_service_client = BlobServiceClient.from_connection_string(conn_str)
+    blob_client = blob_service_client.get_blob_client(
+        container="conteneur-model",
+        blob="model.pth"
+    )
+
+    with open(MODEL_PATH, "wb") as f:
+        f.write(blob_client.download_blob().readall())
+my_model = MODEL_PATH
+
 
 # Ajout de la classe BERT aux globals autorisés pour PyTorch 2.6+
 torch.serialization.add_safe_globals([BertForSequenceClassification])
