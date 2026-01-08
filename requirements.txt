@@ -14,7 +14,7 @@ azure-ai-agents==1.1.0
 azure-ai-projects==1.0.0
 azure-appconfiguration==1.7.2
 azure-batch==15.0.0b1
-azure-cli<2.81.0
+azure-cli==2.81.0
 azure-cli-core==2.81.0
 azure-cli-telemetry==1.1.0
 azure-common==1.1.28
@@ -294,6 +294,7 @@ wrapt==1.14.2
 xmltodict==0.15.1
 zipp==3.23.0
 gunicorn
+
 
 
 
