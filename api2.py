@@ -7,8 +7,8 @@ import numpy as np
 
 app = FastAPI()
 
-MODEL_PATH = "models/model_log_reg.pkl"
-VECTORIZER_PATH = "models/tfidf_vectorizer.pkl"  # À sauvegarder lors de l'entraînement pour reproductibilité
+MODEL_PATH = "model_log_reg.pkl"
+VECTORIZER_PATH = "tfidf_vectorizer.pkl"  # À sauvegarder lors de l'entraînement pour reproductibilité
 
 # Chargement du modèle et du vectorizer (à entraîner une fois avec les mêmes données)
 if not os.path.exists(MODEL_PATH):
@@ -43,3 +43,4 @@ def predict_sentiment(data: TextInput):
 # if __name__ == "__main__":
 #     import uvicorn
 #     uvicorn.run(app, host="0.0.0.0", port=8000)
+
