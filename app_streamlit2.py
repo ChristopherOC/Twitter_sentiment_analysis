@@ -1,8 +1,19 @@
 import streamlit as st
 import requests
 
-API_URL = "http://localhost:8000/predict-sentiment"  # Endpoint adapté
 
+import joblib
+from sklearn.feature_extraction.text import TfidfVectorizer
+
+
+@st.cache_resource
+def load_model():
+    model = joblib.load('modellogreg.pkl')
+    vectorizer = joblib.load('tfidf_vectorizer.pkl')
+    return model, vectorizer
+
+#API_URL = "http://localhost:8000/predict-sentiment"  # Endpoint adapté
+API_URL = "https://analyse-sentiment-twitter.azurewebsites.net/predict-sentiment"
 st.set_page_config(
     page_title="Sentiment Analysis",
     page_icon="💬",

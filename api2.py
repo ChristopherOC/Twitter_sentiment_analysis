@@ -40,6 +40,6 @@ def predict_sentiment(data: TextInput):
         "prob_positif": float(probability[1])
     }
 
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8000)
+# if __name__ == "__main__":
+#     import uvicorn
+#     uvicorn.run(app, host="0.0.0.0", port=8000)
